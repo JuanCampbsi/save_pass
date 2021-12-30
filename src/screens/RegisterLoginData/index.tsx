@@ -24,9 +24,13 @@ interface FormData {
 }
 
 const schema = Yup.object().shape({
-  service_name: Yup.string().required('Nome do serviço é obrigatório!'),
-  email: Yup.string().email('Não é um email válido').required('Email é obrigatório!'),
-  password: Yup.string().required('Senha é obrigatória!'),
+  service_name: Yup.string()
+    .required('Nome do serviço é obrigatório!'),
+  email: Yup.string()
+    .email('Não é um email válido')
+    .required('Email é obrigatório!'),
+  password: Yup.string()
+    .required('Senha é obrigatória!'),
 })
 
 export function RegisterLoginData() {
@@ -47,7 +51,6 @@ export function RegisterLoginData() {
       ...formData
     }  
 
-    console.log(formData)
     try {     
       const dataKey = '@savepass:logins';
       const data = await AsyncStorage.getItem(dataKey);

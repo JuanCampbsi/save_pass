@@ -24,6 +24,7 @@ interface LoginDataProps {
 type LoginListDataProps = LoginDataProps[];
 
 export function Home() {
+  const [isLoading , setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchListData, setSearchListData] = useState<LoginListDataProps>([]);
   const [data, setData] = useState<LoginListDataProps>([]);
@@ -34,21 +35,28 @@ export function Home() {
     const data = response ? JSON.parse(response) : [];
     
     setSearchListData(data)   
-
+    setData(data)
     // Get asyncStorage data, use setSearchListData and setData
   }
 
   function handleFilterLoginData() {
+    const updateEditTask = data.filter(item => item.service_name === searchText)
+    
+      if(searchText){   
+        setSearchListData(updateEditTask);  
+        setIsLoading(false);       
+    }    
     // Filter results inside data, save with setSearchListData
   }
 
   function handleChangeInputText(text: string) {
+    setSearchText(text);
     // Update searchText value
   }
 
   useFocusEffect(useCallback(() => {
     loadData();
-  }, []));
+  }, [searchText]));
 
   return (
     <>
